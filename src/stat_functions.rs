@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{cmp::max_by_key, collections::HashMap};
 
 pub fn compute_mean_min(distance: &HashMap<usize, Vec<usize>>) -> (usize, f64) {
     let mut mean_all: HashMap<usize, f64> = HashMap::new();
@@ -55,4 +55,27 @@ pub fn compute_std_min(distance: &HashMap<usize, Vec<usize>>) -> (usize, f64) {
     return (key, min);
 }
 
-fn compute_min_max() {}
+pub fn compute_min_max(distance: &HashMap<usize, Vec<usize>>) -> ((usize, usize), (usize, usize)) { 
+    let mut min = usize::MAX; //Output the min & max distances > 0 & the node
+    let mut max = usize::MIN;
+    let mut min_key = 0 as usize;
+    let mut max_key = 0 as usize;
+    for (v, d) in distance.iter() {
+        for &i in d {
+            if i < min && i > 0 {
+                min = i;
+                min_key = *v; 
+            } 
+            if i > max {
+                max = i;
+                max_key = *v;
+            }
+        }
+    }
+    return ((min_key, min),(max_key, max));
+}
+
+pub fn median() {
+
+
+}

@@ -3,7 +3,7 @@ mod stat_functions;
 use std::fs::File;
 use std::io::prelude::*;
 use crate::bfs::compute_min_distance;
-use crate::stat_functions::{compute_mean_min, compute_std_min};
+use crate::stat_functions::{compute_mean_min, compute_std_min, compute_min_max};
 
 fn read_file(path: &str) -> Vec<Vec<usize>> { //Read the file and returning a vector & # of vertices
     let mut result: Vec<(usize, usize)> = Vec::new();
@@ -33,6 +33,6 @@ fn read_file(path: &str) -> Vec<Vec<usize>> { //Read the file and returning a ve
 }
 fn main() {
     let graph = read_file("lastfm_asia_edges.txt");
-    let a = compute_std_min(&compute_min_distance(&graph));
+    let a = compute_min_max(&compute_min_distance(&graph));
     println!("{:?}", a)
 }
