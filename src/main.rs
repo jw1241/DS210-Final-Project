@@ -1,7 +1,9 @@
 mod bfs;
+mod stat_functions;
 use std::fs::File;
 use std::io::prelude::*;
-use crate::bfs::{compute_min_distance, uniform};
+use crate::bfs::compute_min_distance;
+use crate::stat_functions::{compute_mean_min, compute_std_min};
 
 fn read_file(path: &str) -> Vec<Vec<usize>> { //Read the file and returning a vector & # of vertices
     let mut result: Vec<(usize, usize)> = Vec::new();
@@ -10,11 +12,14 @@ fn read_file(path: &str) -> Vec<Vec<usize>> { //Read the file and returning a ve
     let mut max_index = 0;
     for i in buf_reader.lines() {
         let line = i.expect("Error reading");
-        let v: Vec<&str> = line.trim().split_whitespace().collect();
+        let v: Vec<&str> = line.trim().split(',').collect();
         let x = v[0].parse::<usize>().expect("Failed to get x");
         let y = v[1].parse::<usize>().expect("Failed to get y");
         if x > max_index {
             max_index = x;
+        }
+        if y > max_index {
+            max_index = y;
         }
         result.push((x, y));
     }
@@ -22,13 +27,12 @@ fn read_file(path: &str) -> Vec<Vec<usize>> { //Read the file and returning a ve
     let mut graph: Vec<Vec<usize>> = vec![vec![];max_index + 1]; //Adjacency list
     for (i,j) in result.iter() {
         graph[*i].push(*j);
+        graph[*j].push(*i);
     }    
     return graph;
 }
-
 fn main() {
-    let graph = read_file("pagerank_data.txt");
-    let a = uniform(&compute_min_distance(&graph));
-    print!("{:?}", a);
+    let graph = read_file("lastfm_asia_edges.txt");
+    let a = compute_std_min(&compute_min_distance(&graph));
+    println!("{:?}", a)
 }
-
