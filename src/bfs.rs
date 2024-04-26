@@ -11,7 +11,6 @@ pub fn compute_min_distance(graph: &Vec<Vec<usize>>) -> HashMap<usize, Vec<usize
         queue.push_back(i);
 
         while let Some(v) = queue.pop_front() { // new unprocessed vertex
-            //let distance1 = min_distance[v];
             for &u in &graph[v] {
                 if min_distance[u] == usize::MAX { // consider all unprocessed neighbors of v
                     min_distance[u] = min_distance[v] + 1;
