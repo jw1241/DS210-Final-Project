@@ -14,7 +14,7 @@ pub fn compute_mean(distance: &HashMap<usize, Vec<usize>>) -> ((usize, f64), (us
     let mut min_key = 0; //FInd the minimum & maximum mean and the associated node
     let mut max_key = 0;
     for (&v, &m) in mean_all.iter() {
-        if m < min {
+        if m < min && m != 0.0 {
             min = m;
             min_key = v;
         } if m > max {
@@ -54,7 +54,7 @@ pub fn compute_std(distance: &HashMap<usize, Vec<usize>>) -> ((usize, f64), (usi
     let mut min_key = 0; //FInd the minimum & maximum standard deviation and the associated node
     let mut max_key = 0;
     for (&v, &s) in std.iter() { 
-        if s < min { //Find the minimum standard deviation & node
+        if s < min && s != 0.0 { //Find the minimum standard deviation & node
             min = s;
             min_key = v;
         } if s> max {
@@ -72,7 +72,7 @@ pub fn compute_min_max(distance: &HashMap<usize, Vec<usize>>) -> ((usize, usize)
     let mut max_key = 0 as usize;
     for (v, d) in distance.iter() {
         for &i in d { //Find max & min distances & their nodes
-            if i < min && i > 0 {
+            if i < min && i != 0 {
                 min = i;
                 min_key = *v; 
             } if i > max {
@@ -111,7 +111,7 @@ pub fn compute_mean_deviation(distance: &HashMap<usize, Vec<usize>>) -> ((usize,
     let mut min_key = 0 as usize;
     let mut max_key = 0 as usize;
     for (&v, &s) in mean_deviation.iter() {
-        if s < min { //Find the min & max mean_deviation & the node
+        if s < min && s != 0.0 { //Find the min & max mean_deviation & the node
             min = s;
             min_key = v;
         } if s > max {
